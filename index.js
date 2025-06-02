@@ -9,7 +9,8 @@ const cors = require("cors");
 const ProfileRouter = require("./routes/profile.routes");
 const OrderRouter = require("./routes/orders.routes");
 const os = require("os");
-
+const { LoginUser } = require("./controllers/user.controller");
+const bcrypt = require("bcrypt");
 app.get("/", (req, res) => res.send("Furniture World!"));
 app.get("/ip", (req, res) => {
   function getLocalIP() {
@@ -29,6 +30,11 @@ app.get("/ip", (req, res) => {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.post("/login", (req, res) => {
+  LoginUser(req, res);
+});
+
 app.use("/user", UserRouter);
 app.use("/profile", ProfileRouter);
 app.use("/api/products", ProductsRouter);
