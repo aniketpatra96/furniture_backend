@@ -89,19 +89,19 @@ app.post("/orders", (req, res) => {
   s;
 });
 
-ProductsRouter.post("/api/products/addall", (req, res) => {
+app.post("/api/products/addall", (req, res) => {
   addAllProducts(req, res);
 });
-ProductsRouter.post("/api/products", (req, res) => {
+app.post("/api/products", (req, res) => {
   createProduct(req, res);
 });
-ProductsRouter.get("/api/products/:id", (req, res) => {
+app.get("/api/products/:id", (req, res) => {
   getProduct(req, res);
 });
-ProductsRouter.get("/api/products", (req, res) => {
+app.get("/api/products", (req, res) => {
   getAllProducts(req, res);
 });
-ProductsRouter.get("/api/products/search/:key", (req, res) => {
+app.get("/api/products/search/:key", (req, res) => {
   searchProduct(req, res);
 });
 
