@@ -8,7 +8,7 @@ const UserRouter = require("./routes/user.routes");
 const cors = require("cors");
 const ProfileRouter = require("./routes/profile.routes");
 const OrderRouter = require("./routes/orders.routes");
-const os = require("os");
+
 const { 
   LoginUser,
   RegisterUser,
@@ -32,21 +32,7 @@ const {
   searchProduct,
 } = require("./controllers/products.controller");
 app.get("/", (req, res) => res.send("Furniture World!"));
-app.get("/ip", (req, res) => {
-  function getLocalIP() {
-    const interfaces = os.networkInterfaces();
-    for (const name of Object.keys(interfaces)) {
-      for (const iface of interfaces[name]) {
-        // Skip over internal (i.e., 127.0.0.1) and non-IPv4 addresses
-        if (iface.family === "IPv4" && !iface.internal) {
-          return iface.address;
-        }
-      }
-    }
-    return "127.0.0.1";
-  }
-  res.json({ ip: getLocalIP() });
-});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -81,26 +67,28 @@ app.delete("/profile/:id", (req, res) => {
 
 app.get("/orders/:id", (req, res) => {
   getAllOrdersByUserId(req, res);
-  s;
 });
 
 app.post("/orders", (req, res) => {
   createOrder(req, res);
-  s;
 });
 
 app.post("/api/products/addall", (req, res) => {
   addAllProducts(req, res);
 });
+
 app.post("/api/products", (req, res) => {
   createProduct(req, res);
 });
+
 app.get("/api/products/:id", (req, res) => {
   getProduct(req, res);
 });
+
 app.get("/api/products", (req, res) => {
   getAllProducts(req, res);
 });
+
 app.get("/api/products/search/:key", (req, res) => {
   searchProduct(req, res);
 });
