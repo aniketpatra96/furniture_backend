@@ -10,7 +10,7 @@ const ProfileRouter = require("./routes/profile.routes");
 const OrderRouter = require("./routes/orders.routes");
 const os = require("os");
 const { LoginUser } = require("./controllers/user.controller");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 app.get("/", (req, res) => res.send("Furniture World!"));
 app.get("/ip", (req, res) => {
   function getLocalIP() {
