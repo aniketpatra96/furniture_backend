@@ -9,8 +9,28 @@ const cors = require("cors");
 const ProfileRouter = require("./routes/profile.routes");
 const OrderRouter = require("./routes/orders.routes");
 const os = require("os");
-const { LoginUser } = require("./controllers/user.controller");
-const bcrypt = require("bcryptjs");
+const { 
+  LoginUser,
+  RegisterUser,
+  updateUser 
+} = require("./controllers/user.controller");
+const {
+  getProfile,
+  addProfile,
+  updateProfile,
+  deleteProfile,
+} = require("./controllers/profile.controller");
+const {
+  createOrder,
+  getAllOrdersByUserId,
+} = require("./controllers/orders.controller");
+const {
+  addAllProducts,
+  getAllProducts,
+  createProduct,
+  getProduct,
+  searchProduct,
+} = require("./controllers/products.controller");
 app.get("/", (req, res) => res.send("Furniture World!"));
 app.get("/ip", (req, res) => {
   function getLocalIP() {
@@ -35,9 +55,55 @@ app.post("/login", (req, res) => {
   LoginUser(req, res);
 });
 
-app.use("/user", UserRouter);
-app.use("/profile", ProfileRouter);
-app.use("/api/products", ProductsRouter);
-app.use("/orders", OrderRouter);
+app.post("/register", (req, res) => {
+  RegisterUser(req, res);
+});
+
+app.put("/user/:id", (req, res) => {
+  updateUser(req, res);
+});
+
+app.get("/profile/:id", (req, res) => {
+  getProfile(req, res);
+});
+
+app.post("/profile/:id", (req, res) => {
+  addProfile(req, res);
+});
+
+app.put("/profile/:id", (req, res) => {
+  updateProfile(req, res);
+});
+
+app.delete("/profile/:id", (req, res) => {
+  deleteProfile(req, res);
+});
+
+app.get("/orders/:id", (req, res) => {
+  getAllOrdersByUserId(req, res);
+  s;
+});
+
+app.post("/orders", (req, res) => {
+  createOrder(req, res);
+  s;
+});
+
+ProductsRouter.post("/api/products/addall", (req, res) => {
+  addAllProducts(req, res);
+});
+ProductsRouter.post("/api/products", (req, res) => {
+  createProduct(req, res);
+});
+ProductsRouter.get("/api/products/:id", (req, res) => {
+  getProduct(req, res);
+});
+ProductsRouter.get("/api/products", (req, res) => {
+  getAllProducts(req, res);
+});
+ProductsRouter.get("/api/products/search/:key", (req, res) => {
+  searchProduct(req, res);
+});
+
 dbConnect();
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}!`));
