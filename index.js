@@ -3,11 +3,7 @@ const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 const dbConnect = require("./db/dbConnect");
-const ProductsRouter = require("./routes/products.routes");
-const UserRouter = require("./routes/user.routes");
 const cors = require("cors");
-const ProfileRouter = require("./routes/profile.routes");
-const OrderRouter = require("./routes/orders.routes");
 const {
   LoginUser,
   RegisterUser,
