@@ -8,11 +8,10 @@ const UserRouter = require("./routes/user.routes");
 const cors = require("cors");
 const ProfileRouter = require("./routes/profile.routes");
 const OrderRouter = require("./routes/orders.routes");
-
-const { 
+const {
   LoginUser,
   RegisterUser,
-  updateUser 
+  updateUser,
 } = require("./controllers/user.controller");
 const {
   getProfile,
@@ -31,6 +30,8 @@ const {
   getProduct,
   searchProduct,
 } = require("./controllers/products.controller");
+const authenticateUser = require("./middlewares/auth.middleware");
+
 app.get("/", (req, res) => res.send("Furniture World!"));
 
 app.use(cors());
@@ -49,47 +50,44 @@ app.put("/user/:id", (req, res) => {
   updateUser(req, res);
 });
 
-app.get("/profile/:id", (req, res) => {
+app.get("/profile/:id", authenticateUser, (req, res) => {
   getProfile(req, res);
 });
 
-app.post("/profile/:id", (req, res) => {
+app.post("/profile/:id", authenticateUser, (req, res) => {
   addProfile(req, res);
 });
 
-app.put("/profile/:id", (req, res) => {
+app.put("/profile/:id", authenticateUser, (req, res) => {
   updateProfile(req, res);
 });
 
-app.delete("/profile/:id", (req, res) => {
+app.delete("/profile/:id", authenticateUser, (req, res) => {
   deleteProfile(req, res);
 });
 
-app.get("/orders/:id", (req, res) => {
+app.get("/orders/:id", authenticateUser, (req, res) => {
   getAllOrdersByUserId(req, res);
 });
 
-app.post("/orders", (req, res) => {
+app.post("/orders", authenticateUser, (req, res) => {
   createOrder(req, res);
+  s;
 });
 
-app.post("/api/products/addall", (req, res) => {
+app.post("/api/products/addall", authenticateUser, (req, res) => {
   addAllProducts(req, res);
 });
-
-app.post("/api/products", (req, res) => {
+app.post("/api/products", authenticateUser, (req, res) => {
   createProduct(req, res);
 });
-
-app.get("/api/products/:id", (req, res) => {
+app.get("/api/products/:id", authenticateUser, (req, res) => {
   getProduct(req, res);
 });
-
-app.get("/api/products", (req, res) => {
+app.get("/api/products", authenticateUser, (req, res) => {
   getAllProducts(req, res);
 });
-
-app.get("/api/products/search/:key", (req, res) => {
+app.get("/api/products/search/:key", authenticateUser, (req, res) => {
   searchProduct(req, res);
 });
 
