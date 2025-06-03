@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.model");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const RegisterUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -22,8 +23,8 @@ const RegisterUser = async (req, res) => {
 
 const LoginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;    
-    const user = await UserModel.findOne({ email });    
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(404).json("User not found");
     }
@@ -31,9 +32,17 @@ const LoginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json("Invalid credentials");
     }
-    return res.status(200).json(user);
+    const token = jwt.sign(
+      { user: { _id: user._id, name: user.name, email: user.email } },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "6h",
+      }
+    );
+    res.status(200).json({ message: "Successfully Logged In!", token });
   } catch (error) {
-    return res.status(500).json(error);
+    console.error(error);
+    res.status(500).json(error);
   }
 };
 
